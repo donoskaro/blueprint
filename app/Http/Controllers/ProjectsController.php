@@ -69,9 +69,10 @@ class ProjectsController extends Controller
      */
     public function show(string $id): Response
     {
-        app()->abort(404, 'Not implemented');
+        $project = $this->projects->find($id);
 
-        return response()->view('projects.show');
+        return response()
+            ->view('projects.show', compact('project'));
     }
 
     /**
