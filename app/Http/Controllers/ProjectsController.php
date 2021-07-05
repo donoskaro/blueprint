@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Interfaces\ProjectEloquentInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class ProjectsController extends Controller
 {
@@ -28,11 +30,12 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): Response
     {
         $projects = $this->projects->paginate('name');
 
-        return view('projects.index', compact('projects'));
+        return response()
+            ->view('projects.index', compact('projects'));
     }
 
     /**
@@ -40,18 +43,18 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): Response
     {
-        return view('projects.create');
+        return response()->view('projects.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  SubscriberListRequest $request
+     * @param  ProjectRequest $request
      * @return RedirectResponse
      */
-    public function store(ProjectRequest $request)
+    public function store(ProjectRequest $request): RedirectResponse
     {
         $this->projects->store($request->all());
 
@@ -64,11 +67,11 @@ class ProjectsController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(string $id): Response
     {
         app()->abort(404, 'Not implemented');
 
-        return view('projects.show');
+        return response()->view('projects.show');
     }
 
     /**
@@ -77,21 +80,22 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(string $id): Response
     {
         $project = $this->projects->find($id);
 
-        return view('projects.edit', compact('project'));
+        return response()
+            ->view('projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param ProjectRequest $request
-     * @param $id
+     * @param string $id
      * @return RedirectResponse
      */
-    public function update(ProjectRequest $request, $id)
+    public function update(ProjectRequest $request, string $id): RedirectResponse
     {
         $this->projects->update($id, $request->all());
 
@@ -104,7 +108,7 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): Response
     {
         app()->abort(404, 'Not implemented');
     }
