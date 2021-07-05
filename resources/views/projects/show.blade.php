@@ -32,6 +32,21 @@
                 <th>Updated at</th>
                 <td>{{ $project->updated_at }}</td>
             </tr>
+            <tr>
+                <th>Files</th>
+                <td>
+                    <form method="POST" action="{{ route('project-files.store', ['projectId' => $project->id]) }}" class="row" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        <div class="col-sm-4">
+                            <input type="file" name="file" class="form-control" />
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-default">Upload</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
         </tbody>
     </table>
 
