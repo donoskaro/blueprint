@@ -13,6 +13,13 @@ Form::macro('textField', function ($name, $label = null, $value = null, $attribu
     return Form::fieldWrapper($name, $label, $element);
 });
 
+Form::macro('emailField', function ($name, $label = null, $value = null, $attributes = array())
+{
+    $element = Form::email($name, $value, Form::fieldAttributes($name, $attributes));
+
+    return Form::fieldWrapper($name, $label, $element);
+});
+
 Form::macro('passwordField', function ($name, $label = null, $attributes = array())
 {
     $element = Form::password($name, Form::fieldAttributes($name, $attributes));
