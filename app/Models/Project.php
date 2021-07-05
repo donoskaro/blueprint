@@ -7,5 +7,6 @@ class Project extends BaseModel
     protected $fillable = [
         'name',
         'description',
+        'email',
     ];
 }

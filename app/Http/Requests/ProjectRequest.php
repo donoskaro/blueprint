@@ -25,6 +25,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
+            'email' => 'nullable|email|max:255',
         ];
     }
 }
