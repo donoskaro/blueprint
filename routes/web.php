@@ -7,4 +7,5 @@ Route::get('/', function () {
 });
 
 Route::resource('projects', 'ProjectsController');
-Route::post('projects/{projectId}/file', 'ProjectFilesController@store')->name('project-files.store');
+
+Route::resource('project-files', 'ProjectFilesController')->only(['store', 'show']);

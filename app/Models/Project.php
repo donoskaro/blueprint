@@ -9,4 +9,9 @@ class Project extends BaseModel
         'description',
         'email',
     ];
+
+    public function files()
+    {
+        return $this->hasMany(ProjectFile::class);
+    }
 }
