@@ -8,4 +8,4 @@ Route::get('/', function () {
 
 Route::resource('projects', 'ProjectsController');
 
-Route::resource('project-files', 'ProjectFilesController')->only(['store', 'show']);
+Route::resource('project-files', 'ProjectFilesController')->only(['index', 'store', 'show']);

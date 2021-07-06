@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -35,6 +36,19 @@ class ProjectFilesController extends Controller
     ) {
         $this->projects = $projects;
         $this->files    = $files;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(): Response
+    {
+        $files = $this->files->paginate('name');
+
+        return response()
+            ->view('project-files.index', compact('files'));
     }
 
     /**
