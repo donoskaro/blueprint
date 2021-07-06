@@ -22,6 +22,15 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ route('projects.index') }}">Projects</a></li>
+                <li><a href="{{ route('project-files.index') }}">Files</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
