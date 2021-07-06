@@ -24,6 +24,7 @@ class ProjectFileRequest extends FormRequest
     public function rules()
     {
         return [
+            'project_id' => 'required|exists:projects,id',
             'file' => 'required|file',
         ];
     }

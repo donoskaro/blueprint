@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use App\Http\Requests\ProjectFileRequest;
 use App\Interfaces\ProjectEloquentInterface;
 use App\Interfaces\ProjectFileEloquentInterface;
-use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ProjectFilesController extends Controller
 {
@@ -43,7 +43,7 @@ class ProjectFilesController extends Controller
      * @param  ProjectFileRequest $request
      * @return RedirectResponse
      */
-    public function store(ProjectFileRequest $request, string $projectId): RedirectResponse
+    public function store(ProjectFileRequest $request): RedirectResponse
     {
         $file = $request->file('file');
 
@@ -53,7 +53,7 @@ class ProjectFilesController extends Controller
 
         $file->move(storage_path('app/project-uploads'), $location);
 
-        $project = $this->projects->find($projectId);
+        $project = $this->projects->find($request->get('project_id'));
 
         $project->files()->create([
             'name'       => $file->getClientOriginalName(),
@@ -67,11 +67,11 @@ class ProjectFilesController extends Controller
      * Display the specified resource.
      *
      * @param  string  $id
-     * @return \Illuminate\Http\Response
+     * @return BinaryFileResponse
      */
-    public function show(string $fileId)
+    public function show(string $id): BinaryFileResponse
     {
-        $file = $this->files->find($fileId);
+        $file = $this->files->find($id);
 
         return response()->download(storage_path("app/project-uploads/{$file->location}"), $file->name);
     }

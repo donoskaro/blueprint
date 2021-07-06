@@ -35,8 +35,10 @@
             <tr>
                 <th>Files</th>
                 <td>
-                    <form method="POST" action="{{ route('project-files.store', ['projectId' => $project->id]) }}" class="row" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('project-files.store') }}" class="row" enctype="multipart/form-data">
                         {{ csrf_field() }}
+
+                        <input type="hidden" name="project_id" value="{{ $project->id }}" />
 
                         <div class="col-sm-4">
                             <input type="file" name="file" class="form-control" />
@@ -50,7 +52,11 @@
 
                     <ul>
                         @foreach ($project->files as $file)
-                            <li><a href="{{ route('project-files.show', ['fileId' => $file->id]) }}" target="_blank">{{ $file->name }}</a></li>
+                            <li>
+                                <a href="{{ route('project-files.show', [$file->id]) }}" target="_blank">
+                                    {{ $file->name }}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </td>
