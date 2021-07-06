@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectFileRequest;
+use App\Interfaces\ProjectEloquentInterface;
 use App\Interfaces\ProjectFileEloquentInterface;
+use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,18 +14,27 @@ use Illuminate\Support\Str;
 class ProjectFilesController extends Controller
 {
     /**
+     * @var ProjectEloquentInterface
+     */
+    protected $projects;
+
+    /**
      * @var ProjectFileEloquentInterface
      */
-    protected $projectFiles;
+    protected $files;
 
     /**
      * ProjectFilesController constructor.
      *
-     * @param ProjectFileEloquentInterface $projectFiles
+     * @param ProjectEloquentInterface $projects
+     * @param ProjectFileEloquentInterface $files
      */
-    public function __construct(ProjectFileEloquentInterface $projectFiles)
-    {
-        $this->projectFiles = $projectFiles;
+    public function __construct(
+        ProjectEloquentInterface $projects,
+        ProjectFileEloquentInterface $files
+    ) {
+        $this->projects = $projects;
+        $this->files    = $files;
     }
 
     /**
@@ -42,12 +53,26 @@ class ProjectFilesController extends Controller
 
         $file->move(storage_path('app/project-uploads'), $location);
 
-        $this->projectFiles->store([
-            'project_id' => $projectId,
+        $project = $this->projects->find($projectId);
+
+        $project->files()->create([
             'name'       => $file->getClientOriginalName(),
             'location'   => $location,
         ]);
 
         return redirect()->back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(string $fileId)
+    {
+        $file = $this->files->find($fileId);
+
+        return response()->download(storage_path("app/project-uploads/{$file->location}"), $file->name);
     }
 }

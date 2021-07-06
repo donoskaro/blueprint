@@ -45,6 +45,14 @@
                             <button class="btn btn-default">Upload</button>
                         </div>
                     </form>
+
+                    <hr />
+
+                    <ul>
+                        @foreach ($project->files as $file)
+                            <li><a href="{{ route('project-files.show', ['fileId' => $file->id]) }}" target="_blank">{{ $file->name }}</a></li>
+                        @endforeach
+                    </ul>
                 </td>
             </tr>
         </tbody>

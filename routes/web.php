@@ -8,3 +8,4 @@ Route::get('/', function () {
 
 Route::resource('projects', 'ProjectsController');
 Route::post('projects/{projectId}/file', 'ProjectFilesController@store')->name('project-files.store');
+Route::get('project-file/{fileId}', 'ProjectFilesController@show')->name('project-files.show');

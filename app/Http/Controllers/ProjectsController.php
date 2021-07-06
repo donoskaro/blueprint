@@ -69,7 +69,7 @@ class ProjectsController extends Controller
      */
     public function show(string $id): Response
     {
-        $project = $this->projects->find($id);
+        $project = $this->projects->find($id, ['files']);
 
         return response()
             ->view('projects.show', compact('project'));
