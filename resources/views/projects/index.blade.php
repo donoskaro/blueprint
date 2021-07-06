@@ -28,6 +28,7 @@
                             <td>{{ $project->created_at }}</td>
                             <td>{{ $project->updated_at }}</td>
                             <td>
+                                <a href="{{ route('projects.show', [$project->id]) }}">View</a> |
                                 <a href="{{ route('projects.edit', [$project->id]) }}">Edit</a>
                             </td>
                         </tr>
